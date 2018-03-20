@@ -1,1 +1,2 @@
-1
+FROM centos
+EVN TZ shanghai
