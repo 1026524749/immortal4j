@@ -36,4 +36,8 @@ public class HelloController {
     public String getSession(HttpSession session){
         return session.getAttribute("uid").toString();
     }
+    @RequestMapping("/text")
+    public String getText(){
+        return "hello world";
+    }
 }
