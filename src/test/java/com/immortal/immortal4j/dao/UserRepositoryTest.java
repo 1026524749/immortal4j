@@ -29,7 +29,7 @@ public class UserRepositoryTest {
         role.setDeptId(1L);
         role.setDeptName("测试");
         role.setRoleType(2);
-        roleService.update(role);
+        //roleService.update(role);
     }
 
 }
