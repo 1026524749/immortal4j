@@ -9,4 +9,9 @@ public interface Constants {
     /** 当前用户 */
     static final String CURRENT_USER = "CURRENT_USER";
 
+    /**
+     * 项目名称
+     */
+    static final String PROJECT_NAME = "immortal4j";
+
 }

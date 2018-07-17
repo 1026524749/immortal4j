@@ -2,6 +2,7 @@ package com.immortal.immortal4j.base;
 
 import com.immortal.immortal4j.base.BaseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author shijieming(1026524749@qq.com)
  * @date 2018/3/11 1:04
  */
-public class BaseService<T extends BaseEntity> {
+public abstract class BaseService<T extends BaseEntity> {
     @Autowired
     protected  JpaRepository<T,Long> repository;
 
@@ -41,8 +43,9 @@ public class BaseService<T extends BaseEntity> {
 
 
     public T get(Long id){
-        T t = repository.findOne(id);
-        return t;
+        Optional<T> t = repository.findById(id);
+        return t.orElse(null);
+
     }
 
     /**
@@ -68,7 +71,7 @@ public class BaseService<T extends BaseEntity> {
      * @param id
      */
     public void delete(Long id){
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
     /**
@@ -95,4 +98,11 @@ public class BaseService<T extends BaseEntity> {
     public List<T> list(){
         return  repository.findAll();
     }
+
+    /**
+     * 获取缓存key
+     * @param suffix 缓存尾部
+     * @return
+     */
+    protected abstract String getCacheKey(String suffix);
 }

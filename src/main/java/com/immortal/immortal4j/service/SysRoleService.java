@@ -2,6 +2,7 @@ package com.immortal.immortal4j.service;
 
 import com.immortal.immortal4j.base.BaseService;
 import com.immortal.immortal4j.entity.SysRole;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,5 +10,10 @@ import org.springframework.stereotype.Service;
  * @date 2018/3/11 1:04
  */
 @Service
+@CacheConfig(cacheNames = "sysRole")
 public class SysRoleService extends BaseService<SysRole> {
+    @Override
+    protected String getCacheKey(String suffix) {
+        return null;
+    }
 }

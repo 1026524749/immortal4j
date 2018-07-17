@@ -1,72 +1,30 @@
 package com.immortal.immortal4j.base;
 
-import com.immortal.immortal4j.support.PageParam;
-import com.immortal.immortal4j.support.PageResult;
+import com.immortal.immortal4j.query.PageParam;
+import com.immortal.immortal4j.query.PageResult;
+import com.immortal.immortal4j.support.BizResult;
+import com.immortal.immortal4j.support.HttpCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shijieming(1026524749@qq.com)
  * @date 2018/3/18 0:40
  */
-public class BaseController<T extends BaseEntity> {
-    @Autowired
-    protected BaseService<T> service;
-
-    /**
-     * 简单查询
-     * @param param
-     * @return
-     */
-    protected PageResult page(PageParam param){
-        Pageable pageable = new PageRequest(param.getPage(),param.getPageSize());
-        Page<T> page = service.page(pageable);
-        PageResult result = new PageResult();
-        result.setPage(param.getPage());
-        result.setPageSize(param.getPageSize());
-        result.setPages(page.getTotalPages());
-        result.setTotals(page.getTotalElements());
-        result.setData(page.getContent());
-        return result;
-    }
-
-    /**
-     * 简单查询全部
-     * @return
-     */
-    protected List<T> list(){
-        return service.list();
-    }
-
-    /**
-     * 内部逻辑删除
-     * @param t
-     */
-    protected final void del(T t){
-        service.del(t.getId(),getCurrentUser());
-    }
-
-    /**
-     * 逻辑删除
-     * @param id
-     */
-    protected final void del(Long id){
-        service.del(id,getCurrentUser());
-    }
-
-    /**
-     * 内部更新
-     * @param t
-     * @return
-     */
-    protected final  T update(T t){
-        return service.update(t,getCurrentUser());
-    }
+public abstract class BaseController{
 
     /**
      * 获取当前用户id
@@ -75,5 +33,29 @@ public class BaseController<T extends BaseEntity> {
     protected Long getCurrentUser(){
         //return WebUtil.getCurrentUser();
         return  1L;
+    }
+    protected HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    }
+
+    protected String getRequestURI() {
+        return getRequest().getRequestURI();
+    }
+
+    /**
+     * 不带数据的自定义返回结果
+     * @return
+     */
+    protected Object setSuccess(){
+        return new BizResult(HttpCode.SUCCESS);
+    }
+
+    /**
+     * 带参数的自定义返回结果
+     * @param data
+     * @return
+     */
+    protected Object setSuccess(Object data){
+        return new BizResult(data);
     }
 }

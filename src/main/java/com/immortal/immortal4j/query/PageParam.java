@@ -1,4 +1,4 @@
-package com.immortal.immortal4j.support;
+package com.immortal.immortal4j.query;
 
 import org.springframework.data.domain.Sort;
 

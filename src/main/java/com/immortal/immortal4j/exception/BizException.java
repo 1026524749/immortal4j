@@ -1,5 +1,8 @@
 package com.immortal.immortal4j.exception;
 
+import com.immortal.immortal4j.support.BizResult;
+import com.immortal.immortal4j.support.HttpCode;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,19 +11,16 @@ import java.util.Map;
  * @date 2018/3/18 19:38
  */
 public class BizException extends BaseException {
+
+    private HttpCode httpCode;
     @Override
-    public Object handler() {
-        Map<String,Object> result = new HashMap<String,Object>();
-        result.put("msg",this.getMessage());
-        result.put("timestamp",System.currentTimeMillis());
-        return result;
+    public BizResult handler() {
+
+        return new BizResult(httpCode);
     }
 
-    public BizException() {
-    }
-
-    public BizException(String message) {
-        super(message);
+    public BizException(HttpCode code) {
+        this.httpCode = code;
     }
 
     public BizException(String message, Throwable cause) {
