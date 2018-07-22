@@ -2,9 +2,10 @@ package com.immortal.immortal4j.controller;
 
 import com.immortal.immortal4j.base.BaseController;
 import com.immortal.immortal4j.entity.SysRole;
+import com.immortal.immortal4j.entity.SysUser;
 import com.immortal.immortal4j.exception.BizException;
 import com.immortal.immortal4j.query.PageParam;
-import com.immortal.immortal4j.service.SysRoleService;
+import com.immortal.immortal4j.service.SysUserService;
 import com.immortal.immortal4j.support.HttpCode;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,18 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author shijieming(1026524749@qq.com)
- * @date 2018/7/15 15:53
+ * @date 2018/7/22 16:20
  */
 @RestController
-@RequestMapping("/role")
-public class SysRoleController extends BaseController {
+@RequestMapping("/user")
+public class SysUserController extends BaseController {
     @Autowired
-    private SysRoleService service;
+    private SysUserService service;
+
     @GetMapping(value = "/{id}")
-    @RequiresPermissions("sys.base.role.read")
+    @RequiresPermissions("sys.base.user.read")
     public Object get(@PathVariable Long id) {
-        SysRole t = service.get(id);
+        SysUser t = service.get(id);
         if (t == null) {
             throw new BizException(HttpCode.NOT_FOUND);
         }
@@ -31,40 +33,40 @@ public class SysRoleController extends BaseController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @RequiresPermissions("sys.base.role.delete")
+    @RequiresPermissions("sys.base.user.delete")
     public Object delete(@PathVariable Long id) {
-        service.del(id,getCurrentUser());
+        service.del(id, getCurrentUser());
         return setSuccess();
     }
 
     @PostMapping
-    @RequiresPermissions("sys.base.role.create")
-    public Object create(SysRole entity) {
-        service.update(entity,getCurrentUser());
+    @RequiresPermissions("sys.base.user.create")
+    public Object create(SysUser entity) {
+        service.update(entity, getCurrentUser());
         return setSuccess();
     }
 
     @PutMapping
-    @RequiresPermissions("sys.base.role.update")
-    public Object update(SysRole entity) {
-        SysRole temp = service.get(entity.getId());
+    @RequiresPermissions("sys.base.user.update")
+    public Object update(SysUser entity) {
+        Object temp = service.get(entity.getId());
         if (temp == null) {
             throw new BizException(HttpCode.NOT_FOUND);
         }
-        service.update(entity,getCurrentUser());
+        service.update(entity, getCurrentUser());
         return setSuccess();
     }
 
     @GetMapping
-    @RequiresPermissions("sys.base.role.read")
+    @RequiresPermissions("sys.base.user.read")
     public Object all() {
         return setSuccess(service.list());
     }
 
     @GetMapping(value = "/page")
-    @RequiresPermissions("sys.base.role.read")
+    @RequiresPermissions("sys.base.user.read")
     public Object query(PageParam pageParam) {
-        PageRequest pageRequest = PageRequest.of(pageParam.getPage()-1,pageParam.getPageSize());
+        PageRequest pageRequest = PageRequest.of(pageParam.getPage() - 1, pageParam.getPageSize());
         return setSuccess(service.page(pageRequest));
     }
 }
