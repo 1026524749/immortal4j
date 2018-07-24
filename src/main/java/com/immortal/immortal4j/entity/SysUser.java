@@ -1,6 +1,7 @@
 package com.immortal.immortal4j.entity;
 
 import com.immortal.immortal4j.base.BaseEntity;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @date 2018/3/8 9:34
  */
 @Entity(name = "t_sys_user")
+@Where(clause = " enable_=1")
 public class SysUser extends BaseEntity {
     /**
      * 登陆帐户
@@ -113,4 +115,180 @@ public class SysUser extends BaseEntity {
     private String userTypeText;
     @Transient
     private String permission;
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getNamePinyin() {
+        return namePinyin;
+    }
+
+    public void setNamePinyin(String namePinyin) {
+        this.namePinyin = namePinyin;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getWeiXin() {
+        return weiXin;
+    }
+
+    public void setWeiXin(String weiXin) {
+        this.weiXin = weiXin;
+    }
+
+    public String getWeiBo() {
+        return weiBo;
+    }
+
+    public void setWeiBo(String weiBo) {
+        this.weiBo = weiBo;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public Long getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Long deptId) {
+        this.deptId = deptId;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStaffNo() {
+        return staffNo;
+    }
+
+    public void setStaffNo(String staffNo) {
+        this.staffNo = staffNo;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getUserTypeText() {
+        return userTypeText;
+    }
+
+    public void setUserTypeText(String userTypeText) {
+        this.userTypeText = userTypeText;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
 }

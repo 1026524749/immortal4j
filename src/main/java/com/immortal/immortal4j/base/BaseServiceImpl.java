@@ -16,9 +16,12 @@ import java.util.Optional;
  * @author shijieming(1026524749@qq.com)
  * @date 2018/3/11 1:04
  */
-public abstract class BaseServiceImpl<T extends BaseEntity> {
-    @Autowired
-    protected  JpaRepository<T,Long> repository;
+public abstract class BaseServiceImpl{
+    /**
+     * 获取默认的Dao类
+     * @return
+     */
+    protected abstract JpaRepository getDefaultRepository();
 
     /**
      * 新建或更新
@@ -26,7 +29,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @param userId 当前用户id
      * @return
      */
-    public T update(T entity, Long userId){
+    public BaseEntity update(BaseEntity entity, Long userId){
         if (entity.getId() == null){
             //新建
             entity.setCreateTime(new Date());
@@ -35,14 +38,12 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
         }
         entity.setUpdateTime(new Date());
         entity.setUpdateBy(userId);
-
-        repository.save(entity);
-        return entity;
+        return (BaseEntity)getDefaultRepository().save(entity);
     }
 
 
-    public T get(Long id){
-        Optional<T> t = repository.findById(id);
+    public BaseEntity get(Long id){
+        Optional<BaseEntity> t = getDefaultRepository().findById(id);
         return t.orElse(null);
 
     }
@@ -53,7 +54,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @param userId 当前用户id
      */
     public void del(Long id, Long userId){
-        T t = get(id);
+        BaseEntity t = get(id);
         t.setEnable(0);
         t.setUpdateTime(new Date());
         t.setUpdateBy(userId);
@@ -64,7 +65,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @param id
      */
     public void delete(Long id){
-        repository.deleteById(id);
+        getDefaultRepository().deleteById(id);
     }
 
     /**
@@ -72,16 +73,16 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @param pageable
      * @return
      */
-    public Page<T> page(Pageable pageable){
-        return repository.findAll(pageable);
+    public Page<BaseEntity> page(Pageable pageable){
+        return getDefaultRepository().findAll(pageable);
     }
 
     /**
      * 简单查询全部
      * @return
      */
-    public List<T> list(){
-        return  repository.findAll();
+    public List<BaseEntity> list(){
+        return  getDefaultRepository().findAll();
     }
 
 }

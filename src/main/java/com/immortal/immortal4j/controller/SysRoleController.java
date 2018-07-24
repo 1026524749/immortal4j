@@ -23,7 +23,7 @@ public class SysRoleController extends BaseController {
     @GetMapping(value = "/{id}")
     @RequiresPermissions("sys.base.role.read")
     public Object get(@PathVariable Long id) {
-        SysRole t = service.get(id);
+        Object t = service.get(id);
         if (t == null) {
             throw new BizException(HttpCode.NOT_FOUND);
         }
@@ -47,7 +47,7 @@ public class SysRoleController extends BaseController {
     @PutMapping
     @RequiresPermissions("sys.base.role.update")
     public Object update(SysRole entity) {
-        SysRole temp = service.get(entity.getId());
+        Object temp = service.get(entity.getId());
         if (temp == null) {
             throw new BizException(HttpCode.NOT_FOUND);
         }

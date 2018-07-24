@@ -25,7 +25,7 @@ public class SysUserController extends BaseController {
     @GetMapping(value = "/{id}")
     @RequiresPermissions("sys.base.user.read")
     public Object get(@PathVariable Long id) {
-        SysUser t = service.get(id);
+        Object t = service.get(id);
         if (t == null) {
             throw new BizException(HttpCode.NOT_FOUND);
         }

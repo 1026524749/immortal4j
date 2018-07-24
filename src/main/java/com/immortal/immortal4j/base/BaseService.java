@@ -9,21 +9,21 @@ import java.util.List;
  * @author shijieming(1026524749@qq.com)
  * @date 2018/7/23 0:43
  */
-public interface BaseService<T extends BaseEntity>{
+public interface BaseService{
     /**
      * 新建或更新
      * @param entity
      * @param userId  当前用户id
      * @return
      */
-    public T update(T entity, Long userId);
+    public BaseEntity update(BaseEntity entity, Long userId);
 
     /**
      * 获取数据
      * @param id
      * @return
      */
-    public T get(Long id);
+    public BaseEntity get(Long id);
 
     /**
      * 逻辑删除
@@ -43,11 +43,11 @@ public interface BaseService<T extends BaseEntity>{
      * @param pageable
      * @return
      */
-    public Page<T> page(Pageable pageable);
+    public Page<BaseEntity> page(Pageable pageable);
 
     /**
      * 获取全部数据
      * @return
      */
-    public List<T> list();
+    public List<BaseEntity> list();
 }
