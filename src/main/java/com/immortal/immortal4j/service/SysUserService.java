@@ -4,6 +4,9 @@ import com.immortal.immortal4j.base.BaseService;
 import com.immortal.immortal4j.entity.SysUser;
 import com.immortal.immortal4j.support.login.ThirdPartyUser;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author shijieming(1026524749@qq.com)
  * @date 2018/7/22 16:23
@@ -22,5 +25,7 @@ public interface SysUserService extends BaseService{
      * @return
      */
     public SysUser insertThirdPartyUser(ThirdPartyUser thirdPartyUser);
+
+
 
 }

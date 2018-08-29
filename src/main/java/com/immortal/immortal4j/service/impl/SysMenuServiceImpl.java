@@ -11,6 +11,7 @@ import com.immortal.immortal4j.utils.InstanceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.redis.core.script.ReactiveScriptExecutor;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -88,7 +89,8 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
      * @param data
      * @return
      */
-    private List<SysMenu> formatList(List<SysMenu> data){
+    @Override
+    public List<SysMenu> formatList(List<SysMenu> data){
         List<SysMenu> resultList = InstanceUtil.newArrayList();
         Map<String, String> menuTypeMap = sysDicService.queryDicByType("MENUTYPE");
         Map<Long, Integer> leafMap = InstanceUtil.newHashMap();
@@ -124,5 +126,10 @@ public class SysMenuServiceImpl extends BaseServiceImpl implements SysMenuServic
             }
         }
         return resultList;
+    }
+
+    @Override
+    public List<Map<String, String>> getAllPermissions() {
+        return repository.getPermissions();
     }
 }

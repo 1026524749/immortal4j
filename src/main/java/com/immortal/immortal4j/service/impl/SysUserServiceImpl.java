@@ -14,6 +14,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author shijieming(1026524749@qq.com)
@@ -60,4 +62,5 @@ public class SysUserServiceImpl extends BaseServiceImpl implements SysUserServic
 
         return null;
     }
+
 }

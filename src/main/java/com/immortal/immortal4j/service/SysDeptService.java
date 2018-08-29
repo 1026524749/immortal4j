@@ -8,4 +8,10 @@ import com.immortal.immortal4j.entity.SysDept;
  * @date 2018/7/24 0:02
  */
 public interface SysDeptService extends BaseService{
+    /**
+     * 查询部门信息
+     * @param id
+     * @return
+     */
+    public SysDept queryById(Long id);
 }

@@ -1,12 +1,8 @@
 package com.immortal.immortal4j.base;
 
-import com.immortal.immortal4j.base.BaseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -31,13 +27,10 @@ public abstract class BaseServiceImpl{
      */
     public BaseEntity update(BaseEntity entity, Long userId){
         if (entity.getId() == null){
-            //新建
-            entity.setCreateTime(new Date());
-            entity.setCreateBy(userId);
-            entity.setEnable(1);
+            setCreateParam(entity,userId,new Date());
+        }else{
+            setUpdateByParam(entity,userId,new Date());
         }
-        entity.setUpdateTime(new Date());
-        entity.setUpdateBy(userId);
         return (BaseEntity)getDefaultRepository().save(entity);
     }
 
@@ -56,9 +49,25 @@ public abstract class BaseServiceImpl{
     public void del(Long id, Long userId){
         BaseEntity t = get(id);
         t.setEnable(0);
-        t.setUpdateTime(new Date());
-        t.setUpdateBy(userId);
+        setUpdateByParam(t,userId,new Date());
+        getDefaultRepository().save(t);
     }
+
+    /**
+     * 逻辑删除
+     * @param entityList 实体类集合
+     * @param userId 当前用户id
+     */
+    public void delBatch(List entityList, Long userId){
+        for(Object entity:entityList){
+            BaseEntity t = (BaseEntity) entity;
+            t.setEnable(0);
+            setUpdateByParam(t,userId,new Date());
+
+        }
+        getDefaultRepository().saveAll(entityList);
+    }
+
 
     /**
      * 物理删除
@@ -83,6 +92,35 @@ public abstract class BaseServiceImpl{
      */
     public List<BaseEntity> list(){
         return  getDefaultRepository().findAll();
+    }
+
+    protected   void  setCreateParam(BaseEntity entity,Long userId,Date date){
+        setUpdateByParam(entity,userId,date);
+        entity.setCreateBy(userId);
+        entity.setCreateTime(date);
+        entity.setEnable(1);
+    }
+    protected   void  setCreateParamBatch(List entityList,Long userId,Date date){
+        for(Object entity:entityList){
+            BaseEntity t = (BaseEntity) entity;
+            setUpdateByParam(t,userId,date);
+            t.setCreateBy(userId);
+            t.setCreateTime(date);
+            t.setEnable(1);
+        }
+
+    }
+
+    protected  void setUpdateByParam(BaseEntity entity,Long userId,Date date){
+        entity.setUpdateBy(userId);
+        entity.setUpdateTime(date);
+    }
+    protected  void setUpdateByParamBatch(List entityList,Long userId,Date date){
+        for(Object entity:entityList){
+            BaseEntity t = (BaseEntity) entity;
+            t.setUpdateBy(userId);
+            t.setUpdateTime(date);
+        }
     }
 
 }

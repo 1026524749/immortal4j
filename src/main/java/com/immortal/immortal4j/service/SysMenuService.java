@@ -22,4 +22,17 @@ public interface SysMenuService extends BaseService{
      * @return
      */
     public List<Object> queryTreeList();
+
+    /**
+     * 获取所有菜单的权限
+     * @return
+     */
+    public List<Map<String,String>> getAllPermissions();
+
+    /**
+     * 对菜单按树形排序。并添加部分信息
+     * @param data
+     * @return
+     */
+    public List<SysMenu> formatList(List<SysMenu> data);
 }
