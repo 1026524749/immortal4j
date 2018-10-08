@@ -1,5 +1,7 @@
 package com.immortal.immortal4j.filter;
 
+import org.slf4j.MDC;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
